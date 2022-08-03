@@ -1,0 +1,38 @@
+#management:
+#  security:
+#    enabled: false
+#    #prometheus+grafana+springboot2监控集成配置
+#  metrics:
+#    export:
+#      prometheus:
+#        enabled: true
+#      jmx:
+#        enabled: true
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+#      base-path: /metrics
+#      #prometheus+grafana+springboot2监控集成配置
+server:
+  port: 8080
+keycloak:
+  # 表示是一个public的client
+  public-client: true
+  ssl-required: external
+  use-resource-role-mappings: true
+  # keycloak的地址
+  auth-server-url: http://keycloak-dev.wistron.com/auth
+  # keycloak中的realm
+  realm: k8sdevwihavatar
+  resource: demoapp
+  securityConstraints:
+    - authRoles:
+        # 以下路径需要user-role角色才能访问
+        - visitor
+      securityCollections:
+        # name可以随便写
+        - name: user-role-mappings
+          patterns:
+            - /keycloakAuthen
+
